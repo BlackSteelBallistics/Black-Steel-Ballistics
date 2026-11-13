@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://blacksteelballistics.github.io/Black-Steel-Ballistics/sitemap.xml
