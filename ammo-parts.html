@@ -15,15 +15,89 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdro
 .contact{background:#202830;color:#fff;padding:42px 0}.contact h2{color:#fff;margin:0 0 8px;font-size:25px}.contact p{color:#c4cbd1;margin:0}.contact-row{display:flex;justify-content:space-between;align-items:center;gap:24px}.btn{display:inline-flex;padding:12px 18px;border-radius:4px;background:var(--red);color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
 footer{background:#171c22;color:#b7c0c7;padding:25px 0;font-size:11px}.footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.disclaimer{max-width:900px;color:#89939c;font-size:10px;margin:14px 0 0}
 @media(max-width:700px){.nav{min-height:68px}nav{gap:12px;font-size:10px}.hero-inner{padding:58px 0}.tiles{grid-template-columns:1fr}.section{padding:48px 0}.contact-row{display:block}.contact .btn{margin-top:20px}}
+
+.filter-panel{margin:30px 0 22px;padding:24px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(25,35,44,.04)}
+.filter-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px}.filter-heading h3{margin:0;font-size:20px;letter-spacing:-.025em}.filter-heading p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.filter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.filter-field{display:flex;flex-direction:column;gap:6px}.filter-field label{font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:#59636d}
+.filter-field input,.filter-field select{width:100%;min-height:43px;padding:10px 12px;border:1px solid #cfd6dc;border-radius:4px;background:#fff;color:var(--ink);font:inherit;font-size:13px}
+.filter-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px}.filter-count{font-size:12px;color:var(--muted)}.reset-filters{border:0;background:transparent;color:var(--red);font:800 11px inherit;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:8px 0}.reset-filters:hover{text-decoration:underline}
+.product-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}.product-card{background:#fff;border:1px solid var(--line);border-radius:7px;padding:20px}.product-card h3{font-size:17px;margin:0 0 7px}.product-card p{font-size:13px;color:var(--muted);margin:0}.product-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.product-meta span{font-size:10px;padding:4px 7px;background:#eef1f3;border-radius:3px;color:#4f5a64}
+.no-results{grid-column:1/-1;padding:22px;background:#e9edef;border-left:3px solid var(--red);color:#56616b;font-size:13px}
+@media(max-width:760px){.filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.filter-grid,.product-results{grid-template-columns:1fr}.filter-heading{display:block}.filter-panel{padding:18px}.filter-actions{align-items:flex-start;flex-direction:column}}
+
 </style>
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="index.html" aria-label="Black Steel Ballistics home"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a><nav aria-label="Main navigation"><a href="index.html#reviews">All categories</a><a href="index.html#about">About</a><a href="mailto:blacksteelballistics@gmail.com">Contact</a></nav></div></header>
 <main>
 <section class="hero"><div class="wrap hero-inner"><div class="crumb"><a href="index.html">Home</a> / Ammo & Parts</div><div class="eyebrow">Ammunition and components</div><h1>Ammo & Parts</h1><p>Product overviews and comparisons covering components, materials, specifications and manufacturer information.</p></div></section>
-<section class="section"><div class="wrap"><div class="kicker">The review desk</div><h2>Clear information. Independent perspective.</h2><p class="section-intro">Explore informational coverage of ammunition and firearm components, with attention to published specifications, materials, quality, safe handling guidance and clear product distinctions.</p><div class="tiles"><article class="tile"><h3>Ammunition</h3><p>Informational product coverage focused on manufacturer-published specifications, labeling, construction and safe-handling information.</p></article><article class="tile"><h3>Parts & Components</h3><p>Overviews of component materials, finishes, dimensions and manufacturer-provided compatibility details.</p></article></div><div class="note">New reviews and product coverage will be added here as content is published. Any product loans, gifts, sponsorships or other material connections will be disclosed in the relevant coverage.</div></div></section>
+<section class="section"><div class="wrap"><div class="kicker">The review desk</div><h2>Clear information. Independent perspective.</h2><p class="section-intro">Explore informational coverage of ammunition and firearm components, with attention to published specifications, materials, quality, safe handling guidance and clear product distinctions.</p><div class="tiles"><article class="tile"><h3>Ammunition</h3><p>Informational product coverage focused on manufacturer-published specifications, labeling, construction and safe-handling information.</p></article><article class="tile"><h3>Parts & Components</h3><p>Overviews of component materials, finishes, dimensions and manufacturer-provided compatibility details.</p></article></div><section class="filter-panel" aria-labelledby="filter-title">
+<div class="filter-heading"><div><h3 id="filter-title">Find ammo & parts</h3><p>Search published reviews or narrow the list by product details.</p></div></div>
+<div class="filter-grid">
+<div class="filter-field"><label for="product-search">Search</label><input id="product-search" type="search" placeholder="Search product or model…" autocomplete="off"></div>
+<div class="filter-field"><label for="filter-brand">Brand</label><select id="filter-brand" data-filter="brand"><option value="">All brand</option></select></div>
+<div class="filter-field"><label for="filter-caliber">Caliber</label><select id="filter-caliber" data-filter="caliber"><option value="">All caliber</option></select></div>
+<div class="filter-field"><label for="filter-type">Part / ammo type</label><select id="filter-type" data-filter="type"><option value="">All part / ammo type</option></select></div>
+<div class="filter-field"><label for="filter-size">Size</label><select id="filter-size" data-filter="size"><option value="">All size</option></select></div>
+<div class="filter-field"><label for="filter-color">Color</label><select id="filter-color" data-filter="color"><option value="">All color</option></select></div>
+</div>
+<div class="filter-actions"><span class="filter-count" id="filter-count" aria-live="polite">No reviews published yet.</span><button class="reset-filters" id="reset-filters" type="button">Clear filters ↺</button></div>
+</section>
+<div class="product-results" id="product-results">
+<div class="no-results" id="empty-state">No reviews have been published in this category yet. Check back soon.</div>
+</div>
+<div class="note">New reviews and product coverage will be added here as content is published. Any product loans, gifts, sponsorships or other material connections will be disclosed in the relevant coverage.</div></div></section>
 <section class="contact"><div class="wrap contact-row"><div><h2>Have a product or question?</h2><p>Manufacturers and readers can reach Black Steel Ballistics directly.</p></div><a class="btn" href="mailto:blacksteelballistics@gmail.com?subject=Black%20Steel%20Ballistics%20Inquiry">Contact BSB</a></div></section>
 </main>
 <footer><div class="wrap"><div class="footer-row"><span>© <span id="year"></span> BLACK STEEL BALLISTICS</span><span>REVIEWS · TESTING · REAL-WORLD PERFORMANCE</span></div><p class="disclaimer">Content is for informational and educational purposes. Always follow applicable laws, manufacturer instructions and established safety practices. Reviews reflect the stated evaluation and may not predict every user's experience. This site does not offer firearms for sale or facilitate firearm transactions.</p></div></footer>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+
+<script>
+(function(){
+ const results=document.getElementById('product-results');
+ const search=document.getElementById('product-search');
+ const selects=[...document.querySelectorAll('[data-filter]')];
+ const count=document.getElementById('filter-count');
+ const reset=document.getElementById('reset-filters');
+ const empty=document.getElementById('empty-state');
+ if(!results||!search||!count||!reset)return;
+ const cards=[...results.querySelectorAll('.product-card')];
+ const keys=['brand','caliber','type','size','color','magnification'];
+ function value(card,key){return (card.dataset[key]||'').trim();}
+ function populate(){
+   selects.forEach(select=>{
+     const key=select.dataset.filter;
+     const values=[...new Set(cards.map(card=>value(card,key)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+     values.forEach(item=>{const option=document.createElement('option');option.value=item.toLowerCase();option.textContent=item;select.appendChild(option);});
+   });
+ }
+ function apply(){
+   const term=search.value.trim().toLowerCase();
+   let shown=0;
+   cards.forEach(card=>{
+     const haystack=[card.textContent,...keys.map(key=>value(card,key))].join(' ').toLowerCase();
+     const matchesSearch=!term||haystack.includes(term);
+     const matchesSelects=selects.every(select=>!select.value||value(card,select.dataset.filter).toLowerCase()===select.value);
+     const visible=matchesSearch&&matchesSelects;
+     card.hidden=!visible;
+     if(visible)shown++;
+   });
+   if(cards.length===0){
+     count.textContent='No reviews published yet.';
+     if(empty)empty.hidden=false;
+   }else{
+     count.textContent=shown+' of '+cards.length+' reviews shown';
+     if(empty)empty.hidden=shown!==0;
+     if(empty&&shown===0)empty.textContent='No matching products. Try changing or clearing your filters.';
+   }
+ }
+ populate();
+ search.addEventListener('input',apply);
+ selects.forEach(select=>select.addEventListener('change',apply));
+ reset.addEventListener('click',()=>{search.value='';selects.forEach(select=>select.value='');apply();search.focus();});
+ apply();
+})();
+</script>
 </body></html>
