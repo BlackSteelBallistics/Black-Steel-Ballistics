@@ -34,7 +34,7 @@ nav a:hover,nav a:focus{color:var(--red)}.nav-cta{padding:10px 15px;border-radiu
 .card{background:#fff;border:1px solid var(--line);border-radius:7px;padding:25px;box-shadow:0 5px 18px rgba(24,34,43,.035);min-height:218px}
 .card-icon{width:39px;height:39px;border-radius:6px;background:#f8eaeb;color:var(--red);display:grid;place-items:center;font-size:18px;font-weight:900}
 .card .label{font-size:10px;color:#89929b;letter-spacing:.16em;font-weight:800;text-transform:uppercase;margin-top:20px}
-.card h3{font-size:19px;margin:6px 0 8px;letter-spacing:-.02em}.card p{font-size:14px;color:var(--muted);margin:0}
+.card h3{font-size:19px;margin:6px 0 8px;letter-spacing:-.02em}.card p{font-size:14px;color:var(--muted);margin:0}.card{display:block;color:inherit;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}.card:hover,.card:focus-visible{transform:translateY(-4px);border-color:#c5a0a3;box-shadow:0 12px 28px rgba(24,34,43,.09);outline:none}.card-link{display:inline-block;margin-top:18px;color:var(--red);font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
 .feature{background:#e9edef;border-block:1px solid #d9dfe3}.feature-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
 .feature-mark{min-height:300px;border-radius:8px;background:linear-gradient(145deg,#252d35,#3d4853);display:grid;place-items:center;position:relative;overflow:hidden}
 .feature-mark:after{content:"";position:absolute;inset:18px;border:1px solid rgba(255,255,255,.14);border-radius:4px}
@@ -68,9 +68,9 @@ footer{background:#171c22;color:#b7c0c7;padding:28px 0;font-size:11px}.footer-ro
  <section class="section" id="reviews"><div class="wrap">
   <div class="section-head"><div><div class="kicker">The review desk</div><h2>Useful insight. No unnecessary noise.</h2></div><p>Explore product coverage focused on design, build quality, usability, value and clearly explained trade-offs. Reviews will be added as content is published.</p></div>
   <div class="cards">
-   <article class="card"><div class="card-icon">01</div><div class="label">Category one</div><h3>Accessories & Gear</h3><p>Hands-on impressions of equipment, materials, fit, finish and everyday usability.</p></article>
-   <article class="card"><div class="card-icon">02</div><div class="label">Category two</div><h3>Optics & Equipment</h3><p>Understand features, practical differences, limitations and value across products.</p></article>
-   <article class="card"><div class="card-icon">03</div><div class="label">Category three</div><h3>Reviews & Comparisons</h3><p>Balanced opinions that explain strengths, weaknesses and who a product may suit.</p></article>
+   <a class="card" href="guns.html" aria-label="Explore Guns"><div class="card-icon">01</div><div class="label">Explore the category</div><h3>Guns</h3><p>Independent reviews and thoughtful coverage focused on design, build quality, features and real-world considerations.</p><span class="card-link">Explore Guns →</span></a>
+   <a class="card" href="optics-equipment.html" aria-label="Explore Optics and Equipment"><div class="card-icon">02</div><div class="label">Explore the category</div><h3>Optics & Equipment</h3><p>Look closer at optics, accessories and supporting equipment, with attention to usability, quality and value.</p><span class="card-link">Explore Optics & Equipment →</span></a>
+   <a class="card" href="ammo-parts.html" aria-label="Explore Ammo and Parts"><div class="card-icon">03</div><div class="label">Explore the category</div><h3>Ammo & Parts</h3><p>Product overviews and comparisons covering components, materials, specifications and manufacturer information.</p><span class="card-link">Explore Ammo & Parts →</span></a>
   </div>
  </div></section>
  <section class="section feature" id="testing"><div class="wrap feature-grid">
