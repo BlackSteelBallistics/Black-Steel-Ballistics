@@ -1,26 +1,92 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Black Steel Ballistics — independent firearms, equipment and gear reviews, testing and real-world performance coverage.">
-<title>Black Steel Ballistics | Reviews. Testing. Real-World Performance.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Black Steel Ballistics — independent firearms-related equipment reviews, responsible testing and straightforward product coverage.">
+<meta name="theme-color" content="#171b20">
+<title>Black Steel Ballistics | Independent Reviews & Testing</title>
 <style>
-:root{--bg:#090a0c;--panel:#111418;--line:#292e34;--muted:#a7adb5;--white:#f2f3f4;--red:#d21f2b;--red2:#8e1019;--max:1160px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif;line-height:1.6}a{color:inherit;text-decoration:none}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}.topline{height:4px;background:linear-gradient(90deg,#650b12,var(--red),#650b12)}header{position:sticky;top:0;z-index:10;background:rgba(8,9,11,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.09em}.mark{width:42px;height:42px;border:2px solid #9da3aa;display:grid;place-items:center;font-size:15px;color:var(--red);font-weight:900;transform:skew(-7deg)}.brand small{display:block;color:#9da3aa;font-size:9px;letter-spacing:.25em;margin-top:2px}.links{display:flex;gap:25px;color:#c4c8cd;font-size:12px;text-transform:uppercase;letter-spacing:.12em}.links a:hover{color:#fff}.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 75% 35%,rgba(190,20,32,.18),transparent 34%),linear-gradient(135deg,#111418 0%,#08090b 58%,#171013 100%)}.hero:after{content:"BSB";position:absolute;right:-15px;bottom:-95px;font-size:clamp(220px,35vw,470px);font-weight:900;letter-spacing:-.1em;color:rgba(255,255,255,.025);pointer-events:none}.hero-inner{position:relative;z-index:1;padding:105px 0 100px;max-width:800px}.eyebrow{color:#ed4650;font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase}.hero h1{font-size:clamp(42px,7vw,82px);line-height:.98;letter-spacing:-.045em;margin:18px 0 20px;font-weight:950;text-transform:uppercase}.hero h1 span{color:var(--red)}.hero p{max-width:620px;color:#c0c5cb;font-size:18px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}.btn{display:inline-block;padding:13px 20px;border:1px solid #535a63;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.btn.primary{background:var(--red);border-color:var(--red)}.btn:hover{filter:brightness(1.15)}.ticker{border-bottom:1px solid var(--line);background:#0e1013}.ticker .wrap{display:flex;justify-content:space-between;gap:18px;padding:14px 0;color:#aeb4bb;font-size:10px;letter-spacing:.18em;text-transform:uppercase}.ticker b{color:#e33b45}.section{padding:78px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px}.kicker{color:#e13b45;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}.section h2{font-size:clamp(28px,4vw,42px);line-height:1.08;margin:8px 0 0;text-transform:uppercase;letter-spacing:-.03em}.section-head p{max-width:420px;color:var(--muted);margin:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.tile{background:linear-gradient(145deg,#171b20,#0e1013);border:1px solid var(--line);padding:25px;min-height:205px;position:relative}.tile:before{content:"";position:absolute;top:0;left:0;width:42px;height:3px;background:var(--red)}.tile .num{color:#666e77;font-size:11px;letter-spacing:.2em}.tile h3{font-size:20px;text-transform:uppercase;margin:24px 0 8px}.tile p{color:var(--muted);font-size:14px;margin:0}.feature{background:#0e1013;border-block:1px solid var(--line)}.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}.graphic{min-height:300px;border:1px solid #343a42;background:radial-gradient(circle at 50% 50%,rgba(210,31,43,.2),transparent 35%),repeating-linear-gradient(135deg,#15191e 0,#15191e 2px,#101317 2px,#101317 8px);display:grid;place-items:center}.graphic strong{font-size:clamp(70px,13vw,150px);letter-spacing:-.1em;color:#d4d7da;text-shadow:4px 5px 0 #4a4f55}.feature p,.about p{color:var(--muted)}.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px}.principle{border-left:2px solid var(--red);padding:5px 12px}.principle b{display:block;text-transform:uppercase;font-size:12px;letter-spacing:.1em}.principle span{font-size:12px;color:var(--muted)}.contact{background:linear-gradient(110deg,#260b0f,#101215 60%);border-block:1px solid #4b1b21}.contact-inner{display:flex;justify-content:space-between;align-items:center;gap:28px}.contact h2{margin:7px 0}.contact p{color:#c1c5ca;max-width:580px}.footer{padding:28px 0;color:#818991;font-size:11px}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.disclaimer{max-width:760px;margin-top:14px;color:#6f7780;font-size:10px}
-@media(max-width:760px){.links{gap:12px;font-size:10px}.links a:nth-child(3),.links a:nth-child(4){display:none}.hero-inner{padding:75px 0}.ticker .wrap{flex-wrap:wrap}.section-head,.contact-inner{display:block}.section-head p{margin-top:14px}.grid{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr}.principles{grid-template-columns:1fr}.graphic{min-height:220px}}
+:root{--ink:#20262d;--muted:#65707b;--paper:#f3f5f6;--white:#fff;--line:#dce1e5;--red:#a92832;--red-dark:#81212a;--steel:#39434d;--max:1160px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.08em;font-size:14px;line-height:1.15}
+.mark{width:43px;height:43px;border-radius:7px;background:var(--ink);color:white;display:grid;place-items:center;font-size:14px;letter-spacing:-.04em;border-bottom:3px solid var(--red)}
+.brand small{display:block;font-size:9px;letter-spacing:.28em;color:var(--muted);margin-top:5px}
+nav{display:flex;align-items:center;gap:27px;color:#47515b;font-size:12px;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+nav a:hover,nav a:focus{color:var(--red)}.nav-cta{padding:10px 15px;border-radius:4px;background:var(--red);color:#fff}
+.menu{display:none;border:1px solid var(--line);background:#fff;border-radius:5px;padding:9px 12px;color:var(--ink);font-weight:700}
+.hero{background:linear-gradient(115deg,#171c22 0%,#29323b 58%,#343e48 100%);color:#fff;position:relative;overflow:hidden}
+.hero:after{content:"BSB";position:absolute;right:3%;bottom:-.25em;font-size:clamp(190px,32vw,410px);font-weight:950;letter-spacing:-.12em;color:rgba(255,255,255,.035);pointer-events:none}
+.hero-inner{position:relative;z-index:1;padding:104px 0 100px;max-width:850px}
+.eyebrow,.kicker{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#d66a71}
+.hero h1{font-size:clamp(42px,7vw,78px);line-height:.99;letter-spacing:-.055em;margin:18px 0 22px;font-weight:900}
+.hero h1 span{color:#e2e6e9}.hero p{max-width:650px;color:#d4dbe0;font-size:18px;margin:0}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:31px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:4px;border:1px solid #aeb8c1;color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:.2s}
+.btn.primary{background:var(--red);border-color:var(--red)}.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.trust{background:#fff;border-bottom:1px solid var(--line)}.trust-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:20px 0}
+.trust-item{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#4c5761}.trust-item b{color:var(--red);margin-right:8px}
+.section{padding:78px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:30px}
+.section h2{font-size:clamp(28px,4vw,42px);line-height:1.1;letter-spacing:-.04em;margin:8px 0 0;color:#20262d}
+.section-head p{max-width:470px;color:var(--muted);margin:0;font-size:15px}
+.kicker{color:var(--red)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:7px;padding:25px;box-shadow:0 5px 18px rgba(24,34,43,.035);min-height:218px}
+.card-icon{width:39px;height:39px;border-radius:6px;background:#f8eaeb;color:var(--red);display:grid;place-items:center;font-size:18px;font-weight:900}
+.card .label{font-size:10px;color:#89929b;letter-spacing:.16em;font-weight:800;text-transform:uppercase;margin-top:20px}
+.card h3{font-size:19px;margin:6px 0 8px;letter-spacing:-.02em}.card p{font-size:14px;color:var(--muted);margin:0}
+.feature{background:#e9edef;border-block:1px solid #d9dfe3}.feature-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.feature-mark{min-height:300px;border-radius:8px;background:linear-gradient(145deg,#252d35,#3d4853);display:grid;place-items:center;position:relative;overflow:hidden}
+.feature-mark:after{content:"";position:absolute;inset:18px;border:1px solid rgba(255,255,255,.14);border-radius:4px}
+.feature-mark strong{font-size:clamp(76px,13vw,142px);letter-spacing:-.12em;color:#f1f3f4;text-shadow:5px 5px 0 rgba(0,0,0,.18)}
+.feature p,.about p{color:var(--muted);max-width:650px}.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px}
+.principle{border-left:3px solid var(--red);padding:4px 12px}.principle b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase}.principle span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.about-panel{background:#fff;border:1px solid var(--line);border-radius:7px;padding:30px;max-width:850px}
+.contact{background:#202830;color:#fff}.contact-inner{display:flex;align-items:center;justify-content:space-between;gap:30px}.contact h2{color:#fff}.contact p{color:#c4cbd1;max-width:610px;margin-bottom:0}
+footer{background:#171c22;color:#b7c0c7;padding:28px 0;font-size:11px}.footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.disclaimer{max-width:900px;color:#89939c;font-size:10px;margin:16px 0 0}
+@media(max-width:760px){.nav{min-height:68px}.menu{display:block}nav{display:none;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:18px 22px 22px;align-items:stretch;gap:0;flex-direction:column}nav.open{display:flex}nav a{padding:13px 0;border-bottom:1px solid #edf0f2}.nav-cta{margin-top:10px;text-align:center}.hero-inner{padding:75px 0}.trust-row{grid-template-columns:1fr;gap:10px}.trust-item{padding:4px 0}.section{padding:60px 0}.section-head,.contact-inner{display:block}.section-head p{margin-top:14px}.cards,.feature-grid{grid-template-columns:1fr}.feature-grid{gap:28px}.feature-mark{min-height:220px}.principles{grid-template-columns:1fr}.contact .btn{margin-top:22px}}
 </style>
 </head>
 <body>
-<div class="topline"></div>
-<header><div class="wrap nav"><a class="brand" href="#home"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a><nav class="links"><a href="#reviews">Reviews</a><a href="#testing">Testing</a><a href="#about">About</a><a href="#contact">Contact</a></nav></div></header>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="#home" aria-label="Black Steel Ballistics home"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a>
+  <button class="menu" id="menu" aria-expanded="false" aria-controls="navigation">Menu ☰</button>
+  <nav id="navigation" aria-label="Main navigation">
+   <a href="#reviews">Reviews</a><a href="#testing">Testing</a><a href="#about">About</a><a class="nav-cta" href="#contact">Contact BSB</a>
+  </nav>
+ </div>
+</header>
 <main id="home">
-<section class="hero"><div class="wrap hero-inner"><div class="eyebrow">Independent firearms & equipment media</div><h1>BLACK STEEL<br><span>BALLISTICS</span></h1><p>Independent reviews. Thoughtful testing. Straightforward opinions on firearms, accessories and the equipment built around them.</p><div class="actions"><a class="btn primary" href="#reviews">Explore the reviews</a><a class="btn" href="#contact">Work with BSB</a></div></div></section>
-<div class="ticker"><div class="wrap"><span><b>01</b> Independent perspective</span><span><b>02</b> Evidence-led reviews</span><span><b>03</b> Real-world performance</span></div></div>
-<section class="section" id="reviews"><div class="wrap"><div class="section-head"><div><div class="kicker">The review desk</div><h2>Gear under the microscope.</h2></div><p>Clear, useful coverage focused on design, build quality, usability, value and documented performance. New reviews will appear here as they are published.</p></div><div class="grid"><article class="tile"><div class="num">CATEGORY / 01</div><h3>Accessories & Gear</h3><p>Hands-on impressions of equipment, materials, fit, finish and everyday usability.</p></article><article class="tile"><div class="num">CATEGORY / 02</div><h3>Optics & Equipment</h3><p>Comparisons that help readers understand features, trade-offs and value.</p></article><article class="tile"><div class="num">CATEGORY / 03</div><h3>Reviews & Comparisons</h3><p>Independent opinions with strengths, limitations and who a product may suit.</p></article></div></div></section>
-<section class="section feature" id="testing"><div class="wrap feature-grid"><div class="graphic"><strong>BSB</strong></div><div><div class="kicker">Beyond the marketing</div><h2>Testing with a purpose.</h2><p>We aim to separate product claims from practical experience. Coverage will prioritize transparent methods, responsible range practices, clear limitations and useful takeaways—not hype.</p><div class="principles"><div class="principle"><b>Transparent</b><span>Disclose relevant relationships.</span></div><div class="principle"><b>Consistent</b><span>Explain what was evaluated.</span></div><div class="principle"><b>Responsible</b><span>Put safety first, always.</span></div></div></div></div></section>
-<section class="section about" id="about"><div class="wrap"><div class="kicker">Who we are</div><h2>Built to be tested.<br>Not just advertised.</h2><p style="max-width:760px">Black Steel Ballistics is an independent media project covering firearms-related equipment, accessories and the people who make them. Our goal is to help viewers make better-informed decisions through balanced reviews, clear explanations and honest assessments. We are not affiliated with any manufacturer unless explicitly disclosed.</p></div></section>
-<section class="section contact" id="contact"><div class="wrap contact-inner"><div><div class="kicker">Manufacturer & media inquiries</div><h2>Have something worth reviewing?</h2><p>Manufacturers and industry representatives can reach out about product information, review opportunities, interviews and media collaborations.</p></div><a class="btn primary" href="mailto:YOUR-EMAIL-HERE?subject=Black%20Steel%20Ballistics%20Inquiry">Contact BSB</a></div></section>
+ <section class="hero"><div class="wrap hero-inner">
+  <div class="eyebrow">Independent firearms & equipment media</div>
+  <h1>BLACK STEEL<br><span>BALLISTICS</span></h1>
+  <p>Independent reviews. Thoughtful testing. Straightforward coverage of firearms-related equipment, accessories and the gear built around them.</p>
+  <div class="actions"><a class="btn primary" href="#reviews">Explore coverage</a><a class="btn" href="#contact">Manufacturer inquiries</a></div>
+ </div></section>
+ <div class="trust"><div class="wrap trust-row"><div class="trust-item"><b>01</b> Independent perspective</div><div class="trust-item"><b>02</b> Clear evaluation criteria</div><div class="trust-item"><b>03</b> Responsible coverage</div></div></div>
+ <section class="section" id="reviews"><div class="wrap">
+  <div class="section-head"><div><div class="kicker">The review desk</div><h2>Useful insight. No unnecessary noise.</h2></div><p>Explore product coverage focused on design, build quality, usability, value and clearly explained trade-offs. Reviews will be added as content is published.</p></div>
+  <div class="cards">
+   <article class="card"><div class="card-icon">01</div><div class="label">Category one</div><h3>Accessories & Gear</h3><p>Hands-on impressions of equipment, materials, fit, finish and everyday usability.</p></article>
+   <article class="card"><div class="card-icon">02</div><div class="label">Category two</div><h3>Optics & Equipment</h3><p>Understand features, practical differences, limitations and value across products.</p></article>
+   <article class="card"><div class="card-icon">03</div><div class="label">Category three</div><h3>Reviews & Comparisons</h3><p>Balanced opinions that explain strengths, weaknesses and who a product may suit.</p></article>
+  </div>
+ </div></section>
+ <section class="section feature" id="testing"><div class="wrap feature-grid">
+  <div class="feature-mark" aria-label="BSB monogram"><strong>BSB</strong></div>
+  <div><div class="kicker">Beyond the marketing</div><h2>Testing with a purpose.</h2><p>Our goal is to separate product claims from practical experience. Coverage will prioritize transparent evaluation, responsible practices, clear limitations and useful takeaways—not hype.</p>
+   <div class="principles"><div class="principle"><b>Transparent</b><span>Disclose relevant relationships.</span></div><div class="principle"><b>Consistent</b><span>Explain what was evaluated.</span></div><div class="principle"><b>Responsible</b><span>Safety comes first.</span></div></div>
+  </div>
+ </div></section>
+ <section class="section about" id="about"><div class="wrap"><div class="kicker">Who we are</div><h2>Built to be tested.<br>Not just advertised.</h2><div class="about-panel"><p>Black Steel Ballistics is an independent media project covering firearms-related equipment, accessories and the people who make them. Our aim is to help viewers make better-informed decisions through balanced reviews, clear explanations and honest assessments.</p><p>We are not affiliated with a manufacturer unless explicitly disclosed. Product loans, gifts, sponsorships or other material connections will be identified in relevant coverage.</p></div></div></section>
+ <section class="section contact" id="contact"><div class="wrap contact-inner"><div><div class="kicker">Manufacturer & media inquiries</div><h2>Let's talk about your product.</h2><p>Manufacturers and industry representatives can reach out about product information, review opportunities, interviews and media collaborations.</p></div><a class="btn primary" href="mailto:REPLACE-WITH-YOUR-EMAIL?subject=Black%20Steel%20Ballistics%20Inquiry">Contact BSB</a></div></section>
 </main>
-<footer class="footer"><div class="wrap"><div class="footer-inner"><span>© <span id="year"></span> BLACK STEEL BALLISTICS</span><span>REVIEWS · TESTING · REAL-WORLD PERFORMANCE</span></div><p class="disclaimer">Content is for informational and educational purposes. Always follow applicable laws, manufacturer instructions and established firearm safety practices. Reviews reflect the stated evaluation and may not predict every user's experience. Product loans, gifts, sponsorships or other material connections will be disclosed where applicable. This site does not offer firearms for sale or facilitate firearm transactions.</p></div></footer>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<footer><div class="wrap"><div class="footer-row"><span>© <span id="year"></span> BLACK STEEL BALLISTICS</span><span>REVIEWS · TESTING · REAL-WORLD PERFORMANCE</span></div><p class="disclaimer">Content is for informational and educational purposes. Always follow applicable laws, manufacturer instructions and established firearm safety practices. Reviews reflect the stated evaluation and may not predict every user's experience. This site does not offer firearms for sale or facilitate firearm transactions.</p></div></footer>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const menu=document.getElementById('menu'),nav=document.getElementById('navigation');
+menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}));
+</script>
 </body></html>
