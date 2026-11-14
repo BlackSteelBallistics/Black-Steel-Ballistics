@@ -72,7 +72,7 @@ footer{background:#171c22;color:#b7c0c7;padding:25px 0;font-size:11px}.footer-ro
  const empty=document.getElementById('empty-state');
  if(!results||!search||!brandFilter||!typeFilter||!ratingFilter||!count||!reset)return;
  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const db=window.supabase.createClient("https://vbokejrmcjiyhhzgbtgo.supabase.co","sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_Xl3");
+ const db=window.supabase.createClient("https://vbokejrmcjiyhhzgbtgo.supabase.co","sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3");
  count.textContent='Loading published community contributions…';
  try{
   const {data:rows,error}=await db.from('member_contributions')
