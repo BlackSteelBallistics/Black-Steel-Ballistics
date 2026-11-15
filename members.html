@@ -122,7 +122,7 @@ document.getElementById("search").addEventListener("input",render);document.getE
     menu.classList.add('bsb-menu-shifted');
   }
   client.auth.getSession().then(({data,error})=>{if(!error)updateGreeting(data.session?.user||null);});
-  client.auth.onAuthStateChange((_event,session)=>updateGreeting(session?.user||null));
+  client.auth.onAuthStateChange((_event,session)=>{queueMicrotask(()=>updateGreeting(session?.user||null));});
 })();
 </script>
 
