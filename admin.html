@@ -90,10 +90,18 @@ header .nav > #menu {
 header .nav>#menu.bsb-menu-shifted{right:calc(var(--bsb-greeting-width,145px) + 28px)!important}
 @media(max-width:760px){.bsb-member-greeting{top:10px;right:12px;max-width:136px;padding:9px 10px;font-size:11px}header .nav>#menu.bsb-menu-shifted{top:10px!important;right:calc(var(--bsb-greeting-width,136px) + 24px)!important}}
 
+/* BSB review category dropdown */
+.nav-review-dropdown{width:100%;}
+.nav-review-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border:0;border-radius:6px;background:transparent;color:inherit;font:inherit;font-weight:700;text-align:left;cursor:pointer;}
+.nav-review-toggle:hover,.nav-review-toggle:focus-visible{background:rgba(120,130,140,.12);outline-offset:2px;}
+.nav-review-options{display:none;margin:0 0 6px 10px;padding:4px;border-left:2px solid var(--accent,#b33);}
+.nav-review-dropdown.open .nav-review-options{display:block;}
+.nav-review-options a{display:block!important;padding:10px 13px 10px 16px!important;border-radius:5px;}
+.nav-review-options a:hover{background:rgba(120,130,140,.12);}
 </style>
 </head>
 <body>
-<header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a><button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="siteNavigation">Menu ☰</button><a class="bsb-member-greeting" id="bsbMemberGreeting" href="member.html" aria-label="Open your member account" title="Open your member account"></a><nav class="navlinks" id="siteNavigation" aria-label="Main navigation"><a href="members.html">Members</a><a href="contributions.html">View &amp; Post Reviews</a><a href="organizations.html">Organizations</a><a href="partnerships.html">Partner with BSB</a><a href="products.html">Product Directory</a><a href="index.html">Home</a></nav></div></header>
+<header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a><button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="siteNavigation">Menu ☰</button><a class="bsb-member-greeting" id="bsbMemberGreeting" href="member.html" aria-label="Open your member account" title="Open your member account"></a><nav class="navlinks" id="siteNavigation" aria-label="Main navigation"><a href="members.html">Members</a><div class="nav-review-dropdown"><button class="nav-review-toggle" type="button" aria-expanded="false">View &amp; Post Reviews <span aria-hidden="true">▾</span></button><div class="nav-review-options"><a href="contributions.html?category=guns#contributionComposer">Guns</a><a href="contributions.html?category=optics_equipment#contributionComposer">Optics &amp; Equipment</a><a href="contributions.html?category=ammo_parts#contributionComposer">Ammo &amp; Parts</a></div></div><a href="organizations.html">Organizations</a><a href="partnerships.html">Partner with BSB</a><a href="products.html">Product Directory</a><a href="index.html">Home</a></nav></div></header>
 <section class="hero"><div class="wrap"><div class="eyebrow">Restricted access · BSB team</div><h1>Administration</h1><p>Review organization claims, record verification decisions, and keep organization records accurate. Access is restricted to authorized BSB administrators.</p></div></section>
 <main class="wrap">
 <section class="panel" id="accessPanel"><h2 id="accessTitle">Administrator sign in</h2><p class="muted" id="accessHint">Sign in with your BSB account. Only accounts with the administrator role can view claim details.</p>
@@ -262,5 +270,9 @@ checkAccess();
 })();
 </script>
 
+<script>
+/* BSB review category dropdown behavior */
+(()=>{const nav=document.getElementById("siteNavigation")||document.getElementById("navigation");if(!nav)return;const wrap=nav.querySelector(".nav-review-dropdown"),toggle=nav.querySelector(".nav-review-toggle"),menu=document.getElementById("menu");if(!wrap||!toggle)return;toggle.addEventListener("click",()=>{const open=wrap.classList.toggle("open");toggle.setAttribute("aria-expanded",String(open));});if(menu)menu.addEventListener("click",()=>{if(!nav.classList.contains("open")){wrap.classList.remove("open");toggle.setAttribute("aria-expanded","false");}});})();
+</script>
 </body>
 </html>
