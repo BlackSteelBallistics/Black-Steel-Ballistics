@@ -9,7 +9,7 @@ function render(){const q=$("search").value.toLowerCase().trim(),type=$("type").
 async function load(){const {data,error}=await db.from("member_contributions").select("id,author_id,contribution_type,category,item_name,brand,title,summary,body,rating,test_context,evaluation_basis,created_at").eq("status","published").order("created_at",{ascending:false});if(error){$("feed").innerHTML='<div class="empty">Community contributions are temporarily unavailable.</div>';return}const rows=data||[];const ids=[...new Set(rows.map(x=>x.author_id))];let map={};if(ids.length){const {data:profiles}=await db.from("profiles").select("id,username,display_name,avatar_url").in("id",ids);(profiles||[]).forEach(p=>map[p.id]=p)}contributions=rows.map(x=>({...x,profile:map[x.author_id]||{}}));render()}
 
 async function loadOrganizationResponses(row){
- const host=document.createElement("section");host.className="detail-block";
+ const previous=document.getElementById("officialResponsesSection");if(previous)previous.remove();const host=document.createElement("section");host.id="officialResponsesSection";host.className="detail-block";
  const heading=document.createElement("h3");heading.textContent="Official organization responses";
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Statements here are posted by approved representatives of BSB-verified organizations and are separate from the member-authored review.";
  const list=document.createElement("div");list.id="officialResponses";list.textContent="Loading official responses…";
