@@ -66,6 +66,11 @@ header .nav>nav.open a,header .nav>.navlinks.open a{display:block;padding:11px 1
 header .nav>nav.open a:hover,header .nav>.navlinks.open a:hover{background:#f1f3f5;color:var(--red,#a92832)}
 header .nav>nav.open .nav-cta{margin-top:5px;text-align:center;background:var(--red,#a92832);color:#fff}
 @media(max-width:760px){header .nav{min-height:68px}header .nav>nav.open,header .nav>.navlinks.open{left:0;right:0;max-width:none;width:100%;top:calc(100% + 1px)}}
+
+/* BSB persistent menu button: keep navigation available on every page and while scrolling */
+header .nav>#menu{display:inline-flex!important;visibility:visible!important;opacity:1!important;position:fixed!important;top:12px!important;right:max(14px,calc((100vw - 1160px)/2))!important;z-index:10000!important;flex:0 0 auto!important;min-height:40px!important;}
+header .nav>nav.open,header .nav>.navlinks.open{position:fixed!important;top:62px!important;right:max(14px,calc((100vw - 1160px)/2))!important;left:auto!important;z-index:9999!important;}
+@media(max-width:760px){header .nav>#menu{top:10px!important;right:14px!important}header .nav>nav.open,header .nav>.navlinks.open{top:58px!important;left:14px!important;right:14px!important;width:auto!important;max-width:none!important;}}
 </style>
 </head>
 <body>
