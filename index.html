@@ -52,6 +52,7 @@ nav a:hover,nav a:focus{color:var(--red)}.nav-cta{padding:10px 15px;border-radiu
 .contact{background:#202830;color:#fff}.contact-inner{display:flex;align-items:center;justify-content:space-between;gap:30px}.contact h2{color:#fff}.contact p{color:#c4cbd1;max-width:610px;margin-bottom:0}
 footer{background:#171c22;color:#b7c0c7;padding:28px 0;font-size:11px}.footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.disclaimer{max-width:900px;color:#89939c;font-size:10px;margin:16px 0 0}
 @media(max-width:760px){.nav{min-height:68px}.menu{display:block}nav{display:none;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:18px 22px 22px;align-items:stretch;gap:0;flex-direction:column}nav.open{display:flex}nav a{padding:13px 0;border-bottom:1px solid #edf0f2}.nav-cta{margin-top:10px;text-align:center}.hero-inner{padding:75px 0}.trust-row{grid-template-columns:1fr;gap:10px}.trust-item{padding:4px 0}.section{padding:60px 0}.section-head,.contact-inner{display:block}.section-head p{margin-top:14px}.cards,.feature-grid{grid-template-columns:1fr}.feature-grid{gap:28px}.feature-mark{min-height:220px}.principles{grid-template-columns:1fr}.contact .btn{margin-top:22px}}
+ .latest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.latest-card{background:#fff;border:1px solid var(--line);border-radius:7px;padding:22px;min-height:190px}.latest-meta{font-size:10px;color:#8a929a;letter-spacing:.12em;text-transform:uppercase;font-weight:800}.latest-card h3{font-size:18px;line-height:1.25;margin:10px 0 8px}.latest-card p{font-size:14px;color:var(--muted);margin:0}.latest-by{font-size:12px;color:var(--muted);margin-top:14px}.latest-link{display:inline-block;margin-top:15px;color:var(--red);font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}.latest-empty{background:#fff;border:1px dashed #cbd2d8;border-radius:7px;padding:24px;color:var(--muted)}@media(max-width:760px){.latest-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -80,6 +81,11 @@ footer{background:#171c22;color:#b7c0c7;padding:28px 0;font-size:11px}.footer-ro
    <a class="card" href="ammo-parts.html" aria-label="Explore Ammo and Parts"><div class="card-icon">03</div><div class="label">Explore the category</div><h3>Ammo & Parts</h3><p>Product overviews and comparisons covering components, materials, specifications and manufacturer information.</p><span class="card-link">Explore Ammo & Parts →</span></a>
   </div>
  </div></section>
+ <section class="section" id="latest-reviews"><div class="wrap">
+  <div class="section-head"><div><div class="kicker">From the community</div><h2>Latest community reviews</h2></div><p>First-hand experiences and member-submitted reports. Each contribution is identified by its author and linked to the full report.</p></div>
+  <div id="latest-review-list" class="latest-grid"><div class="latest-empty">Loading recent community reviews…</div></div>
+  <p style="margin-top:22px"><a class="btn" style="color:var(--ink)" href="contributions.html">Browse all reviews &amp; reports</a> <a class="btn" style="color:var(--ink)" href="member.html">Write a review</a></p>
+ </div></section>
  <section class="section feature" id="testing"><div class="wrap feature-grid">
   <div class="feature-mark" aria-label="BSB monogram"><strong>BSB</strong></div>
   <div><div class="kicker">Beyond the marketing</div><h2>Testing with a purpose.</h2><p>Our goal is to separate product claims from practical experience. Coverage will prioritize transparent evaluation, responsible practices, clear limitations and useful takeaways—not hype.</p>
@@ -95,5 +101,23 @@ document.getElementById('year').textContent=new Date().getFullYear();
 const menu=document.getElementById('menu'),nav=document.getElementById('navigation');
 menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async function(){
+ const target=document.getElementById('latest-review-list');if(!target||!window.supabase)return;
+ const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+ const cats={guns:'Guns',optics_equipment:'Optics & Equipment',ammo_parts:'Ammo & Parts',accessories:'Accessories'};
+ try{
+  const db=window.supabase.createClient("https://vbokejrmcjiyhhzgbtgo.supabase.co","sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3");
+  const {data,error}=await db.from('member_contributions').select('id,author_id,contribution_type,category,item_name,brand,title,summary,rating,created_at').eq('status','published').order('created_at',{ascending:false}).limit(3);
+  if(error)throw error;
+  const rows=data||[];
+  if(!rows.length){target.innerHTML='<div class="latest-empty">No community reviews have been published yet. Be among the first to share your experience.</div>';return}
+  const ids=[...new Set(rows.map(x=>x.author_id).filter(Boolean))];let profiles={};
+  if(ids.length){const {data:people,error:profileError}=await db.from('profiles').select('id,username,display_name').in('id',ids);if(profileError)throw profileError;(people||[]).forEach(p=>profiles[p.id]=p)}
+  target.innerHTML=rows.map(row=>{const p=profiles[row.author_id]||{};const type=row.contribution_type==='review'?'Product review':'Testing report';return '<article class="latest-card"><div class="latest-meta">'+esc(type)+' · '+esc(cats[row.category]||row.category)+'</div><h3>'+esc(row.title)+'</h3><div class="latest-meta">'+esc([row.brand,row.item_name].filter(Boolean).join(' · '))+(row.rating?' · '+row.rating+'/5':'')+'</div><p>'+esc(row.summary)+'</p><div class="latest-by">By '+esc(p.display_name||p.username||'BSB member')+'</div><a class="latest-link" href="contributions.html?id='+encodeURIComponent(row.id)+'">Read full report →</a></article>'}).join('');
+ }catch(err){target.innerHTML='<div class="latest-empty">Community reviews are temporarily unavailable. Please try again later.</div>';}
+})();
 </script>
 </body></html>
