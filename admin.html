@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#171b20">
+<title>BSB Administration | Black Steel Ballistics</title>
+<style>
+:root{--ink:#20262d;--muted:#65707b;--paper:#f3f5f6;--white:#fff;--line:#dce1e5;--red:#a92832;--red-dark:#81212a;--steel:#39434d}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}.wrap{width:min(1080px,calc(100% - 36px));margin:auto}
+header{background:#fff;border-bottom:1px solid var(--line)}.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:850;letter-spacing:.08em;font-size:13px;display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;border-radius:6px;background:var(--ink);color:white;display:grid;place-items:center;border-bottom:3px solid var(--red)}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.25em}.navlinks{display:flex;gap:18px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.hero{background:linear-gradient(115deg,#171c22,#35414c);color:white;padding:42px 0}.eyebrow,.kicker{font-size:10px;font-weight:850;letter-spacing:.2em;text-transform:uppercase;color:#d66a71}.hero h1{font-size:clamp(32px,5vw,48px);line-height:1.05;letter-spacing:-.04em;margin:9px 0}.hero p{color:#d6dde2;max-width:700px;margin:0}
+main{padding:28px 0 70px}.panel,.claim{background:white;border:1px solid var(--line);border-radius:7px;padding:20px;margin-bottom:16px;box-shadow:0 4px 15px #1b26300a}.panel h2{margin:0 0 6px}.muted{color:var(--muted)}.hidden{display:none!important}
+.input,textarea,select{width:100%;padding:11px 12px;border:1px solid #cfd6dc;border-radius:5px;background:white;color:var(--ink);font:inherit}.field{margin:10px 0}.field label{display:block;font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.btn{border:0;border-radius:4px;background:var(--red);color:white;padding:10px 14px;font:800 11px/1.4 inherit;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.btn:hover{background:var(--red-dark)}.btn.secondary{background:#edf0f2;color:var(--ink)}.btn:disabled{opacity:.5;cursor:not-allowed}.status{margin:12px 0;padding:10px 12px;border-radius:5px;background:#eef1f3;color:#34404a;font-size:13px}.status.error{background:#f9e9ea;color:#8c222b}.status.success{background:#e7f4eb;color:#21633e}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.toolbar input{flex:1;min-width:210px}.toolbar select{width:auto;min-width:180px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px}.stat strong{display:block;font-size:26px;line-height:1.1}.stat span{font-size:10px;color:var(--muted);font-weight:850;text-transform:uppercase;letter-spacing:.1em}
+.claim h3{margin:0;font-size:21px}.claim-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}.meta{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.pill{border-radius:20px;background:#eef1f3;padding:4px 9px;font-size:10px;font-weight:850;letter-spacing:.06em;text-transform:uppercase}.pill.pending{background:#fff3d9;color:#805400}.pill.approved{background:#e5f3eb;color:#21633e}.pill.rejected{background:#f9e9ea;color:#8c222b}.pill.needs_information{background:#eaf0fb;color:#244c83}
+.details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:15px 0}.detail{background:#f7f8f9;border-radius:5px;padding:10px 12px;min-width:0}.detail label{display:block;color:var(--muted);font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.08em}.detail div{overflow-wrap:anywhere}.explanation{white-space:pre-wrap;background:#f7f8f9;padding:13px;border-radius:5px;margin:10px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.review-note{min-height:70px;resize:vertical}.self-note{background:#fff6e5;border:1px solid #eed7a5;padding:10px 12px;border-radius:5px;color:#704b00;font-size:13px;margin:12px 0}
+.empty{background:#fff;border:1px dashed #cbd2d8;border-radius:7px;text-align:center;padding:34px;color:var(--muted)}footer{background:#171c22;color:#aeb8c0;padding:24px 0;font-size:11px}
+@media(max-width:650px){.details,.stats{grid-template-columns:1fr}.nav{align-items:flex-start;padding:12px 0}.navlinks{gap:10px;flex-wrap:wrap;justify-content:flex-end}.toolbar select{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a><nav class="navlinks"><a href="organizations.html">Organizations</a><a href="members.html">Members</a><a href="index.html">Home</a></nav></div></header>
+<section class="hero"><div class="wrap"><div class="eyebrow">Restricted access · BSB team</div><h1>Administration</h1><p>Review organization claims, record verification decisions, and keep organization records accurate. Access is restricted to authorized BSB administrators.</p></div></section>
+<main class="wrap">
+<section class="panel" id="accessPanel"><h2 id="accessTitle">Administrator sign in</h2><p class="muted" id="accessHint">Sign in with your BSB account. Only accounts with the administrator role can view claim details.</p>
+<form id="signInForm" class="hidden"><div class="details"><div class="field"><label for="email">Email</label><input class="input" id="email" type="email" autocomplete="username" required></div><div class="field"><label for="password">Password</label><input class="input" id="password" type="password" autocomplete="current-password" required></div></div><button class="btn">Sign in</button></form>
+<div class="actions"><button class="btn secondary hidden" id="signOut" type="button">Sign out</button><a class="btn secondary" href="organizations.html">Back to organizations</a></div><div id="accessStatus" aria-live="polite"></div></section>
+<section id="dashboard" class="hidden">
+<div class="stats"><div class="stat"><strong id="pendingCount">0</strong><span>Pending review</span></div><div class="stat"><strong id="infoCount">0</strong><span>Needs information</span></div><div class="stat"><strong id="verifiedCount">0</strong><span>Approved claims</span></div></div>
+<div class="toolbar"><input class="input" id="search" type="search" placeholder="Search organization, claimant, or email"><select class="input" id="statusFilter" aria-label="Filter claims"><option value="active">Open claims</option><option value="pending">Pending</option><option value="needs_information">Needs information</option><option value="all">All claims</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></div>
+<div id="claimsList"><div class="empty">Loading organization claims…</div></div>
+</section>
+</main>
+<footer><div class="wrap">© <span id="year"></span> BLACK STEEL BALLISTICS · Administrative actions are recorded with the reviewing account and timestamp.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://vbokejrmcjiyhhzgbtgo.supabase.co";
+const SUPABASE_KEY="sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
+let currentUser=null, claims=[];
+function setStatus(message,kind){const el=$("accessStatus");el.textContent=message||"";el.className=message?"status "+(kind||""):"";}
+function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function labelStatus(s){return s==="needs_information"?"Needs information":s.charAt(0).toUpperCase()+s.slice(1);}
+function formatDate(v){return v?new Date(v).toLocaleString():"—";}
+async function checkAccess(){
+ const {data,error}=await db.auth.getSession();
+ currentUser=data.session&&data.session.user?data.session.user:null;
+ if(!currentUser){$("dashboard").classList.add("hidden");$("signInForm").classList.remove("hidden");$("signOut").classList.add("hidden");$("accessTitle").textContent="Administrator sign in";$("accessHint").textContent="Sign in with your BSB account. Only accounts with the administrator role can view claim details.";return;}
+ $("signInForm").classList.add("hidden");$("signOut").classList.remove("hidden");$("accessTitle").textContent="Signed in";$("accessHint").textContent="Checking administrator permissions for "+currentUser.email+".";
+ const {data:role,error:roleError}=await db.from("user_roles").select("role").eq("user_id",currentUser.id).eq("role","admin").maybeSingle();
+ if(roleError||!role){$("dashboard").classList.add("hidden");$("accessTitle").textContent="Access restricted";$("accessHint").textContent="This account does not have the BSB administrator role.";setStatus("You are signed in, but you are not authorized to open this dashboard.","error");return;}
+ $("accessTitle").textContent="BSB administrator access";$("accessHint").textContent="Signed in as "+currentUser.email+". Claim details are private to authorized administrators.";setStatus("Administrator access confirmed.","success");$("dashboard").classList.remove("hidden");await loadClaims();
+}
+async function loadClaims(){
+ $("claimsList").innerHTML='<div class="empty">Loading organization claims…</div>';
+ const {data,error}=await db.from("organization_claim_requests").select("id,organization_id,claimant_id,claimant_name,job_title,company_email,relationship,verification_details,status,reviewer_notes,reviewed_at,created_at,organizations(name,organization_type,website_url,verification_status)").order("created_at",{ascending:false});
+ if(error){$("claimsList").innerHTML='<div class="empty">Could not load claims. Please refresh and try again.</div>';setStatus("Claim retrieval failed: "+error.message,"error");return;}
+ claims=data||[];
+ $("pendingCount").textContent=claims.filter(c=>c.status==="pending").length;
+ $("infoCount").textContent=claims.filter(c=>c.status==="needs_information").length;
+ $("verifiedCount").textContent=claims.filter(c=>c.status==="approved").length;
+ renderClaims();
+}
+function renderClaims(){
+ const q=$("search").value.trim().toLowerCase(), filter=$("statusFilter").value;
+ let rows=claims.filter(c=>{
+  const org=c.organizations||{};
+  const hay=[org.name,c.claimant_name,c.job_title,c.company_email,c.relationship,c.verification_details].join(" ").toLowerCase();
+  const statusMatch=filter==="all"||filter==="active"?(filter==="all"||c.status==="pending"||c.status==="needs_information"):c.status===filter;
+  return statusMatch&&(!q||hay.includes(q));
+ });
+ if(!rows.length){$("claimsList").innerHTML='<div class="empty">No claims match this view.</div>';return;}
+ $("claimsList").innerHTML=rows.map(c=>{
+  const org=c.organizations||{};
+  const own=c.claimant_id===currentUser.id;
+  const website=org.website_url?'<a href="'+esc(org.website_url)+'" target="_blank" rel="noopener noreferrer">Organization website ↗</a>':"Not provided";
+  const finalized=c.status==="approved"||c.status==="rejected";
+  return '<article class="claim" data-claim="'+esc(c.id)+'"><div class="claim-top"><div><div class="kicker">Organization claim</div><h3>'+esc(org.name||"Organization")+'</h3><div class="meta"><span class="pill">'+esc(org.organization_type||"organization")+'</span><span class="pill '+esc(c.status)+'">'+esc(labelStatus(c.status))+'</span><span class="pill">'+(org.verification_status==="verified"?"Organization verified":"Organization unverified")+'</span></div></div><div class="muted">Submitted '+esc(formatDate(c.created_at))+'</div></div>'+
+  (own?'<div class="self-note"><strong>Self-submitted claim:</strong> This claim was submitted by the signed-in administrator. Verify the claimant through an independent company contact or other reliable source before approving.</div>':"")+
+  '<div class="details"><div class="detail"><label>Claimant</label><div>'+esc(c.claimant_name)+'</div></div><div class="detail"><label>Title / position</label><div>'+esc(c.job_title)+'</div></div><div class="detail"><label>Organization email</label><div><a href="mailto:'+esc(c.company_email)+'">'+esc(c.company_email)+'</a></div></div><div class="detail"><label>Relationship</label><div>'+esc(c.relationship.replace(/_/g," "))+'</div></div><div class="detail"><label>Organization website</label><div>'+website+'</div></div><div class="detail"><label>Last reviewed</label><div>'+esc(formatDate(c.reviewed_at))+'</div></div></div>'+
+  '<div><strong>Verification explanation</strong><div class="explanation">'+esc(c.verification_details)+'</div></div>'+
+  '<div class="field"><label for="note-'+esc(c.id)+'">Private reviewer notes</label><textarea class="input review-note" id="note-'+esc(c.id)+'" maxlength="4000" placeholder="Record what was checked, contact method, and any follow-up needed">'+esc(c.reviewer_notes||"")+'</textarea></div>'+
+  (finalized?'<p class="muted">This claim has been finalized. A new claim is required to change the decision.</p>':'<div class="actions"><button class="btn" data-decision="approved" data-id="'+esc(c.id)+'">Approve &amp; verify</button><button class="btn secondary" data-decision="needs_information" data-id="'+esc(c.id)+'">Request more information</button><button class="btn secondary" data-decision="rejected" data-id="'+esc(c.id)+'">Reject claim</button></div>')+
+  '</article>';
+ }).join("");
+ document.querySelectorAll("[data-decision]").forEach(b=>b.addEventListener("click",()=>reviewClaim(b.dataset.id,b.dataset.decision,b)));
+}
+async function reviewClaim(id,decision,button){
+ const claim=claims.find(c=>c.id===id);if(!claim)return;
+ const note=$("note-"+id).value.trim();
+ let message=decision==="approved"?"Approve this claim and mark the organization as verified?":decision==="rejected"?"Reject this organization claim?":"Mark this claim as needing more information?";
+ if(!confirm(message))return;
+ button.disabled=true;
+ const {data,error}=await db.rpc("bsb_review_organization_claim",{p_claim_id:id,p_decision:decision,p_reviewer_notes:note||null});
+ if(error){setStatus("Review action failed: "+error.message,"error");button.disabled=false;return;}
+ setStatus("Claim updated: "+labelStatus(decision)+".","success");
+ await loadClaims();
+}
+$("signInForm").addEventListener("submit",async e=>{e.preventDefault();setStatus("Signing in…");const {error}=await db.auth.signInWithPassword({email:$("email").value,password:$("password").value});if(error){setStatus(error.message,"error");return;}await checkAccess();});
+$("signOut").addEventListener("click",async()=>{await db.auth.signOut();claims=[];$("dashboard").classList.add("hidden");$("signInForm").classList.remove("hidden");$("signOut").classList.add("hidden");$("accessTitle").textContent="Administrator sign in";$("accessHint").textContent="Sign in with your BSB account. Only accounts with the administrator role can view claim details.";setStatus("You have signed out.","success");});
+$("search").addEventListener("input",renderClaims);$("statusFilter").addEventListener("change",renderClaims);$("year").textContent=new Date().getFullYear();
+db.auth.onAuthStateChange(()=>{setTimeout(checkAccess,0);});
+checkAccess();
+</script>
+</body>
+</html>
