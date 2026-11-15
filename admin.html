@@ -30,6 +30,13 @@ main{padding:28px 0 70px}.panel,.claim{background:white;border:1px solid var(--l
 <div class="stats"><div class="stat"><strong id="pendingCount">0</strong><span>Pending review</span></div><div class="stat"><strong id="infoCount">0</strong><span>Needs information</span></div><div class="stat"><strong id="verifiedCount">0</strong><span>Approved claims</span></div></div>
 <div class="toolbar"><input class="input" id="search" type="search" placeholder="Search organization, claimant, or email"><select class="input" id="statusFilter" aria-label="Filter claims"><option value="active">Open claims</option><option value="pending">Pending</option><option value="needs_information">Needs information</option><option value="all">All claims</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></div>
 <div id="claimsList"><div class="empty">Loading organization claims…</div></div>
+
+<div class="panel" style="margin-top:26px">
+ <div class="claim-top"><div><div class="kicker">Partner program</div><h2>Manufacturer partnership applications</h2><p class="muted">Review proposals from BSB-verified organizations. Approval adds the organization to the public partner directory.</p></div><button class="btn secondary" type="button" id="refreshPartnerships">Refresh</button></div>
+ <div class="stats"><div class="stat"><strong id="partnerPending">0</strong><span>Pending</span></div><div class="stat"><strong id="partnerInfo">0</strong><span>Needs information</span></div><div class="stat"><strong id="partnerApproved">0</strong><span>Approved</span></div></div>
+ <div class="toolbar"><input class="input" id="partnerSearch" type="search" placeholder="Search organization, contact or products"><select class="input" id="partnerFilter" aria-label="Filter partnership applications"><option value="active">Open applications</option><option value="pending">Pending</option><option value="needs_information">Needs information</option><option value="all">All applications</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></div>
+ <div id="partnershipApplications"><div class="empty">Loading partnership applications…</div></div>
+</div>
 </section>
 </main>
 <footer><div class="wrap">© <span id="year"></span> BLACK STEEL BALLISTICS · Administrative actions are recorded with the reviewing account and timestamp.</div></footer>
@@ -39,7 +46,7 @@ const SUPABASE_URL="https://vbokejrmcjiyhhzgbtgo.supabase.co";
 const SUPABASE_KEY="sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);
-let currentUser=null, claims=[];
+let currentUser=null, claims=[], partnershipApplications=[];
 function setStatus(message,kind){const el=$("accessStatus");el.textContent=message||"";el.className=message?"status "+(kind||""):"";}
 function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function labelStatus(s){return s==="needs_information"?"Needs information":s.charAt(0).toUpperCase()+s.slice(1);}
@@ -51,8 +58,53 @@ async function checkAccess(){
  $("signInForm").classList.add("hidden");$("signOut").classList.remove("hidden");$("accessTitle").textContent="Signed in";$("accessHint").textContent="Checking administrator permissions for "+currentUser.email+".";
  const {data:role,error:roleError}=await db.from("user_roles").select("role").eq("user_id",currentUser.id).eq("role","admin").maybeSingle();
  if(roleError||!role){$("dashboard").classList.add("hidden");$("accessTitle").textContent="Access restricted";$("accessHint").textContent="This account does not have the BSB administrator role.";setStatus("You are signed in, but you are not authorized to open this dashboard.","error");return;}
- $("accessTitle").textContent="BSB administrator access";$("accessHint").textContent="Signed in as "+currentUser.email+". Claim details are private to authorized administrators.";setStatus("Administrator access confirmed.","success");$("dashboard").classList.remove("hidden");await loadClaims();
+ $("accessTitle").textContent="BSB administrator access";$("accessHint").textContent="Signed in as "+currentUser.email+". Claim details are private to authorized administrators.";setStatus("Administrator access confirmed.","success");$("dashboard").classList.remove("hidden");await loadClaims();await loadPartnershipApplications();
 }
+
+async function loadPartnershipApplications(){
+ $("partnershipApplications").innerHTML='<div class="empty">Loading partnership applications…</div>';
+ const {data,error}=await db.from("partnership_applications").select("id,organization_id,applicant_id,contact_name,job_title,business_email,partnership_type,product_categories,products_to_consider,proposal,website_url,status,reviewer_notes,created_at,organizations(name,organization_type,website_url,verification_status)").order("created_at",{ascending:false});
+ if(error){$("partnershipApplications").innerHTML='<div class="empty">Could not load partnership applications: '+esc(error.message)+'</div>';return;}
+ partnershipApplications=data||[];
+ $("partnerPending").textContent=partnershipApplications.filter(x=>x.status==="pending").length;
+ $("partnerInfo").textContent=partnershipApplications.filter(x=>x.status==="needs_information").length;
+ $("partnerApproved").textContent=partnershipApplications.filter(x=>x.status==="approved").length;
+ renderPartnershipApplications();
+}
+function renderPartnershipApplications(){
+ const q=$("partnerSearch").value.trim().toLowerCase(),filter=$("partnerFilter").value;
+ const names={product_review:"Product review / coverage",testing_evaluation:"Testing / evaluation",sponsorship:"Sponsorship",content_collaboration:"Content collaboration",events:"Events",other:"Other"};
+ const rows=partnershipApplications.filter(a=>{
+  const hay=[a.organizations?.name,a.contact_name,a.job_title,a.business_email,a.products_to_consider,a.proposal].join(" ").toLowerCase();
+  const statusMatch=filter==="all"||(filter==="active"?(a.status==="pending"||a.status==="needs_information"):a.status===filter);
+  return statusMatch&&(!q||hay.includes(q));
+ });
+ if(!rows.length){$("partnershipApplications").innerHTML='<div class="empty">No partnership applications match this view.</div>';return;}
+ $("partnershipApplications").innerHTML=rows.map(a=>{
+  const org=a.organizations||{},finalized=a.status==="approved"||a.status==="rejected";
+  const own=a.applicant_id===currentUser.id;
+  return '<article class="claim"><div class="claim-top"><div><div class="kicker">Partnership application</div><h3>'+esc(org.name||"Organization")+'</h3><div class="meta"><span class="pill">'+esc(names[a.partnership_type]||a.partnership_type)+'</span><span class="pill '+esc(a.status)+'">'+esc(labelStatus(a.status))+'</span><span class="pill">'+(org.verification_status==="verified"?"Organization verified":"Organization unverified")+'</span></div></div><div class="muted">Submitted '+esc(formatDate(a.created_at))+'</div></div>'+
+  (own?'<div class="self-note"><strong>Self-submitted:</strong> Independently verify the business contact and proposed relationship before approval.</div>':"")+
+  '<div class="details"><div class="detail"><label>Contact</label><div>'+esc(a.contact_name)+'</div></div><div class="detail"><label>Position</label><div>'+esc(a.job_title)+'</div></div><div class="detail"><label>Business email</label><div><a href="mailto:'+esc(a.business_email)+'">'+esc(a.business_email)+'</a></div></div><div class="detail"><label>Website</label><div>'+(a.website_url?'<a href="'+esc(a.website_url)+'" target="_blank" rel="noopener noreferrer">Open website ↗</a>':"Not provided")+'</div></div><div class="detail"><label>Categories</label><div>'+esc((a.product_categories||[]).join(", ")||"Not specified")+'</div></div><div class="detail"><label>Organization type</label><div>'+esc(org.organization_type||"—")+'</div></div></div>'+
+  '<div><strong>Products / services for consideration</strong><div class="explanation">'+esc(a.products_to_consider)+'</div></div><div style="margin-top:12px"><strong>Proposal</strong><div class="explanation">'+esc(a.proposal)+'</div></div>'+
+  '<div class="field"><label for="partner-note-'+esc(a.id)+'">Private reviewer notes</label><textarea class="input" id="partner-note-'+esc(a.id)+'" maxlength="4000">'+esc(a.reviewer_notes||"")+'</textarea></div>'+
+  (finalized?'<p class="muted">This application has been finalized.</p>':'<div class="field"><label for="partner-summary-'+esc(a.id)+'">Public partner-directory summary (required for approval)</label><textarea class="input" id="partner-summary-'+esc(a.id)+'" maxlength="1000" placeholder="A factual, neutral description of the approved partnership (20–1,000 characters)."></textarea></div><div class="actions"><button class="btn" data-partner-decision="approved" data-id="'+esc(a.id)+'">Approve &amp; list partner</button><button class="btn secondary" data-partner-decision="needs_information" data-id="'+esc(a.id)+'">Request information</button><button class="btn secondary" data-partner-decision="rejected" data-id="'+esc(a.id)+'">Reject</button></div>')+
+  '</article>';
+ }).join("");
+ document.querySelectorAll("[data-partner-decision]").forEach(b=>b.addEventListener("click",()=>reviewPartnership(b.dataset.id,b.dataset.partnerDecision,b)));
+}
+async function reviewPartnership(id,decision,button){
+ const app=partnershipApplications.find(x=>x.id===id);if(!app)return;
+ const note=$("partner-note-"+id).value.trim(),summary=$("partner-summary-"+id)?.value.trim()||"";
+ if(decision==="approved"&&summary.length<20){alert("Add a public partner-directory summary of at least 20 characters before approval.");return;}
+ const prompt=decision==="approved"?"Approve this partnership and add the organization to the public BSB partner directory?":decision==="rejected"?"Reject this partnership application?":"Request more information from this applicant?";
+ if(!confirm(prompt))return;
+ button.disabled=true;
+ const {error}=await db.rpc("bsb_review_partnership_application",{p_application_id:id,p_decision:decision,p_reviewer_notes:note||null,p_public_summary:decision==="approved"?summary:null});
+ if(error){setStatus("Partnership review failed: "+error.message,"error");button.disabled=false;return;}
+ setStatus("Partnership application updated: "+labelStatus(decision)+".","success");await loadPartnershipApplications();
+}
+
 async function loadClaims(){
  $("claimsList").innerHTML='<div class="empty">Loading organization claims…</div>';
  const {data,error}=await db.from("organization_claim_requests").select("id,organization_id,claimant_id,claimant_name,job_title,company_email,relationship,verification_details,status,reviewer_notes,reviewed_at,created_at,organizations(name,organization_type,website_url,verification_status)").order("created_at",{ascending:false});
@@ -100,7 +152,7 @@ async function reviewClaim(id,decision,button){
 }
 $("signInForm").addEventListener("submit",async e=>{e.preventDefault();setStatus("Signing in…");const {error}=await db.auth.signInWithPassword({email:$("email").value,password:$("password").value});if(error){setStatus(error.message,"error");return;}await checkAccess();});
 $("signOut").addEventListener("click",async()=>{await db.auth.signOut();claims=[];$("dashboard").classList.add("hidden");$("signInForm").classList.remove("hidden");$("signOut").classList.add("hidden");$("accessTitle").textContent="Administrator sign in";$("accessHint").textContent="Sign in with your BSB account. Only accounts with the administrator role can view claim details.";setStatus("You have signed out.","success");});
-$("search").addEventListener("input",renderClaims);$("statusFilter").addEventListener("change",renderClaims);$("year").textContent=new Date().getFullYear();
+$("search").addEventListener("input",renderClaims);$("statusFilter").addEventListener("change",renderClaims);$("partnerSearch").addEventListener("input",renderPartnershipApplications);$("partnerFilter").addEventListener("change",renderPartnershipApplications);$("refreshPartnerships").addEventListener("click",loadPartnershipApplications);$("year").textContent=new Date().getFullYear();
 db.auth.onAuthStateChange(()=>{setTimeout(checkAccess,0);});
 checkAccess();
 </script>
