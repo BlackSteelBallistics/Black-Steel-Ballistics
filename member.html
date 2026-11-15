@@ -91,7 +91,7 @@ header .nav > #menu {
 <button class="btn" id="saveBtn">Save account information</button></form><div id="editStatus" aria-live="polite"></div></section><p><a class="btn secondary" href="members.html">Back to member directory</a></p><section class="panel hidden" id="signOutPanel"><h3>Finished for now?</h3><p class="muted">Sign out of your BSB member account on this device.</p><button class="btn secondary" id="memberSignOut" type="button">Sign Out</button></section></main>
 <footer><div class="wrap">© <span id="year"></span> BLACK STEEL BALLISTICS · Organization affiliations appear only after approval.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
-const db=window.supabase.createClient("https://vbokejrmcjiyhhzgbtgo.supabase.co","sb_publishable_kO-Mv2AAl08rWcR5mMoz9A_XUoyTXl3");
+const db=window.supabase.createClient("https://vbokejrmcjiyhhzgbtgo.supabase.co","sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3");
 const $=id=>document.getElementById(id);let user=null,profile=null,privateDetails={};const params=new URLSearchParams(location.search);
 const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function status(id,t,k=""){const e=$(id);e.className="status "+k;e.textContent=t}
