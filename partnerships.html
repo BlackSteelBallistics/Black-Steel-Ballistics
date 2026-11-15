@@ -49,7 +49,7 @@ header{background:#fff;border-bottom:1px solid var(--line)}.nav{min-height:76px;
 <script>
 const db=window.supabase.createClient("https://vbokejrmcjiyhhzgbtgo.supabase.co","sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3");
 const $=id=>document.getElementById(id);let currentUser=null,eligibleOrgs=[];
-const types={product_review:"Product review / coverage",testing_evaluation:"Testing / evaluation",sponsorship:"Sponsorship",content_collaboration:"Content collaboration",events:"Events",other:"Other"};
+const types={platform_owner:"Platform owner",product_review:"Product review / coverage",testing_evaluation:"Testing / evaluation",sponsorship:"Sponsorship",content_collaboration:"Content collaboration",events:"Events",other:"Other"};
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function setStatus(id,msg,kind=""){const el=$(id);el.textContent=msg||"";el.className=msg?"status "+kind:"";}
 function date(v){return v?new Date(v).toLocaleDateString():"";}
