@@ -5,13 +5,14 @@
  .filters .field select{min-width:0}.photo-credit{font-size:10px;color:#7b858e;margin:-5px 0 10px}.photo-credit a{color:#68737d;text-decoration:underline}.product{display:flex;flex-direction:column}.product .btn{margin-top:auto}.product-photo{transition:transform .2s}.product:hover .product-photo{transform:scale(1.025)}
 </style></head><body>
 <header><div class="wrap nav"><a class="brand" href="index.html">BLACK STEEL<small>BALLISTICS</small></a><nav class="links"><a href="index.html">Home</a><a href="guns.html">Guns</a><a href="optics-equipment.html">Optics & Equipment</a><a href="ammo-parts.html">Ammo & Parts</a><a href="member.html">Post a review</a></nav></div></header>
-<section class="hero"><div class="wrap"><div class="muted" style="color:#c5cdd3">BSB RESEARCH & REVIEW DIRECTORY</div><h1 id="pageTitle">Product Directory</h1><p id="intro">Search products, review manufacturer-published specifications, and find community reviews and testing reports connected to each listing.</p></div></section>
+<section class="hero"><div class="wrap"><div class="muted" style="color:#c5cdd3">BSB RESEARCH & REVIEW DIRECTORY</div><h1 id="pageTitle">Product Directory</h1><p id="intro">Search the catalog by product name, category, brand, type, caliber, size, color or material. Open any listing to see its product information and linked community reviews.</p></div></section>
 <main class="wrap main">
 <section id="catalog">
 <div class="panel"><div class="filters">
 <div class="field"><label for="search">Search products</label><input id="search" type="search" placeholder="Brand, model, description…"></div>
 <div class="field"><label for="category">Category</label><select id="category"><option value="">All categories</option><option value="guns">Guns</option><option value="optics_equipment">Optics & Equipment</option><option value="ammo_parts">Ammo & Parts</option><option value="accessories">Accessories</option></select></div>
 <div class="field"><label for="brand">Brand</label><select id="brand"><option value="">All brands</option></select></div>
+<div class="field"><label for="type">Product type</label><select id="type"><option value="">Any type</option></select></div>
 <div class="field"><label for="caliber">Caliber</label><select id="caliber"><option value="">Any caliber</option></select></div>
 <div class="field"><label for="size">Size</label><select id="size"><option value="">Any size</option></select></div>
 <div class="field"><label for="color">Color</label><select id="color"><option value="">Any color</option></select></div>
@@ -33,7 +34,7 @@
 <div class="field"><label for="pWebsite">Manufacturer/product URL</label><input id="pWebsite" type="url" placeholder="https://"></div><div class="field"><label for="pImage">Product image URL</label><input id="pImage" type="url" placeholder="Direct image URL (https://)"></div><div class="field"><label for="pImageSource">Image source page</label><input id="pImageSource" type="url" placeholder="Manufacturer image/source page"></div>
 <div class="field"><label for="pStatus">Publication status</label><select id="pStatus"><option value="draft">Save as draft</option><option value="published">Publish listing</option></select></div>
 </div><p><button class="btn">Save product</button></p><div id="adminStatus" class="status hidden"></div></form></section>
-</main><footer class="foot"><div class="wrap">© <span id="year"></span> Black Steel Ballistics · Product information is informational, not an offer to sell. Always verify specifications with the manufacturer.</div></footer>
+</main><footer class="foot"><div class="wrap">© <span id="year"></span> Black Steel Ballistics · Product information is informational, not an offer to sell. Always verify details with the manufacturer. Product names and images remain the property of their respective owners; image-source links are provided where available.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 const db=window.supabase.createClient("https://vbokejrmcjiyhhzgbtgo.supabase.co","sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3");
 const $=id=>document.getElementById(id), esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -44,12 +45,12 @@ async function loadCatalog(){
  const {data,error}=await db.from("products").select("id,category,brand,model,slug,summary,specifications,manufacturer_organization_id,website_url,image_url,image_source_url,created_at").eq("status","published").order("brand").order("model");
  if(error){$("products").innerHTML='<div class="panel">The product directory could not be loaded. Please try again later.</div>';$("count").textContent="Unable to load products";return}
  rows=data||[];const brands=[...new Set(rows.map(x=>x.brand))].sort();brands.forEach(b=>{const o=document.createElement("option");o.value=b;o.textContent=b;$("brand").append(o)});
- ["caliber","size","color","material"].forEach(key=>{const sel=$(key);const values=[...new Set(rows.map(p=>p.specifications?.[key]).filter(v=>v!==undefined&&v!==null&&String(v).trim()).map(v=>String(v)))].sort();values.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;sel.append(o)});if(!values.length)sel.disabled=true});
+ ["type","caliber","size","color","material"].forEach(key=>{const sel=$(key);const values=[...new Set(rows.map(p=>p.specifications?.[key]).filter(v=>v!==undefined&&v!==null&&String(v).trim()).map(v=>String(v)))].sort();values.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;sel.append(o)});if(!values.length)sel.disabled=true});
  render();
 }
 function render(){
  const term=$("search").value.toLowerCase().trim(),cat=$("category").value,brand=$("brand").value;
- const attrs=["caliber","size","color","material"];
+ const attrs=["type","caliber","size","color","material"];
  const filtered=rows.filter(p=>(!cat||p.category===cat)&&(!brand||p.brand===brand)&&attrs.every(k=>!$(k).value||String(p.specifications?.[k]??"") === $(k).value)&&(!term||(p.brand+" "+p.model+" "+p.summary+" "+JSON.stringify(p.specifications)).toLowerCase().includes(term)));
  const sort=$("sort").value;filtered.sort((a,b)=>sort==="model"?(a.model||"").localeCompare(b.model||""):sort==="newest"?new Date(b.created_at||0)-new Date(a.created_at||0):(a.brand||"").localeCompare(b.brand||"")||(a.model||"").localeCompare(b.model||""));
  $("count").textContent=filtered.length+" of "+rows.length+" published products";
@@ -69,7 +70,7 @@ async function loadDetail(id){
  const ids=[...new Set(reviews.map(r=>r.author_id))];const {data:profiles}=await db.from("profiles").select("id,display_name,username").in("id",ids);const pm=Object.fromEntries((profiles||[]).map(x=>[x.id,x]));
  $("reviews").innerHTML=reviews.map(r=>'<article class="review"><strong>'+esc(r.title)+'</strong><p>'+esc(r.summary)+'</p><span class="muted">'+esc(r.contribution_type==="review"?(r.rating? r.rating+"/5 stars":"Product review"):"Testing report")+' · '+esc(pm[r.author_id]?.display_name||pm[r.author_id]?.username||"BSB member")+'</span><p><a href="contributions.html?id='+encodeURIComponent(r.id)+'">Read full contribution →</a></p></article>').join("");
 }
-["search","category","brand","caliber","size","color","material","sort"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+["search","category","brand","type","caliber","size","color","material","sort"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
 $("productForm").addEventListener("submit",async e=>{e.preventDefault();const {data:{user}}=await db.auth.getUser();if(!user){$("adminStatus").textContent="Sign in with a BSB administrator account first.";return}
  let specs;try{specs=JSON.parse($("pSpecs").value||"{}");if(!specs||Array.isArray(specs)||typeof specs!=="object")throw new Error()}catch{$("adminStatus").textContent="Specifications must be a valid JSON object.";return}
  const brand=$("pBrand").value.trim(),model=$("pModel").value.trim(),payload={category:$("pCategory").value,brand,model,slug:slug(brand+"-"+model),summary:$("pSummary").value.trim(),specifications:specs,website_url:$("pWebsite").value.trim()||null,image_url:$("pImage").value.trim()||null,image_source_url:$("pImageSource").value.trim()||null,status:$("pStatus").value,created_by:user.id};
