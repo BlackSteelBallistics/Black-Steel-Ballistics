@@ -87,8 +87,14 @@ header .nav > #menu {
   }
 }
 
+
+/* BSB signed-in member greeting */
+.bsb-member-greeting{display:none;position:fixed;top:12px;right:14px;z-index:10002;max-width:145px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:10px 12px;min-height:42px;border:1px solid var(--line,#dce1e5);border-radius:7px;background:#fff;color:var(--ink,#20262d);font:700 12px/20px Inter,ui-sans-serif,system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+header .nav>#menu.bsb-menu-shifted{right:calc(var(--bsb-greeting-width,145px) + 28px)!important}
+@media(max-width:760px){.bsb-member-greeting{top:10px;right:12px;max-width:136px;padding:9px 10px;font-size:11px}header .nav>#menu.bsb-menu-shifted{top:10px!important;right:calc(var(--bsb-greeting-width,136px) + 24px)!important}}
+
 </style></head><body>
-<header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a><button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="siteNavigation">Menu ☰</button><div class="navlinks" id="siteNavigation" aria-label="Main navigation"><a href="members.html">Members</a><a href="contributions.html">View &amp; Post Reviews</a><a href="organizations.html">Organizations</a><a href="partnerships.html">Partner with BSB</a><a href="products.html">Product Directory</a><a href="index.html">Home</a><a href="admin.html" id="adminNav" class="hidden">BSB Admin</a></div></div></header>
+<header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">BSB</span><span>BLACK STEEL<small>BALLISTICS</small></span></a><button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="siteNavigation">Menu ☰</button><span class="bsb-member-greeting" id="bsbMemberGreeting" aria-live="polite"></span><div class="navlinks" id="siteNavigation" aria-label="Main navigation"><a href="members.html">Members</a><a href="contributions.html">View &amp; Post Reviews</a><a href="organizations.html">Organizations</a><a href="partnerships.html">Partner with BSB</a><a href="products.html">Product Directory</a><a href="index.html">Home</a><a href="admin.html" id="adminNav" class="hidden">BSB Admin</a></div></div></header>
 <section class="hero"><div class="wrap"><div class="eyebrow">The BSB network</div><h1>Organizations</h1><p>Find manufacturers, businesses, corporations, government agencies and other organizations. Connect your member profile to an organization through an approval-based affiliation.</p></div></section>
 <main class="wrap">
 <section class="panel" id="accountPanel"><div class="detail-head"><div><div class="kicker">Member access</div><h2 id="accountTitle">Sign in to BSB</h2><p class="muted" id="accountHint">Sign in or create a member account to create an organization or request an affiliation.</p></div><a class="btn secondary hidden" id="myProfileLink" href="member.html">My profile</a><button class="btn secondary hidden" id="signOut">Sign out</button></div>
@@ -112,6 +118,8 @@ header .nav > #menu {
 const SUPABASE_URL="https://vbokejrmcjiyhhzgbtgo.supabase.co";
 const SUPABASE_KEY="sb_publishable_kO_Mv2AAl08rWcR5mMoz9A_XUoyTXl3";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  window.bsbSupabase=db;
 let currentUser=null, organizations=[], selectedOrg=null;
 const $=id=>document.getElementById(id);
 const typeNames={manufacturer:"Manufacturer",business:"Business",corporation:"Corporation",government:"Government agency",nonprofit:"Nonprofit",other:"Other organization"};
@@ -158,4 +166,31 @@ db.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;upd
 /* BSB page menu interaction */
 (()=>{const button=document.getElementById('menu'),navigation=document.getElementById('siteNavigation');if(!button||!navigation)return;button.addEventListener('click',()=>{const open=navigation.classList.toggle('open');button.setAttribute('aria-expanded',String(open));});navigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{navigation.classList.remove('open');button.setAttribute('aria-expanded','false');}));document.addEventListener('click',event=>{if(!button.contains(event.target)&&!navigation.contains(event.target)){navigation.classList.remove('open');button.setAttribute('aria-expanded','false');}});})();
 </script>
+
+<script>
+(function(){
+  const client=window.bsbSupabase, greeting=document.getElementById('bsbMemberGreeting'), menu=document.getElementById('menu');
+  if(!client||!greeting||!menu||!client.auth)return;
+  let request=0;
+  async function updateGreeting(user){
+    const check=++request;
+    if(!user){greeting.style.display='none';greeting.textContent='';menu.classList.remove('bsb-menu-shifted');document.documentElement.style.removeProperty('--bsb-greeting-width');return;}
+    let username=user.user_metadata?.username||'';
+    try{
+      const {data}=await client.from('profiles').select('username').eq('id',user.id).maybeSingle();
+      if(check!==request)return;
+      username=data?.username||username||user.email?.split('@')[0]||'member';
+    }catch(_){username=username||user.email?.split('@')[0]||'member';}
+    if(check!==request)return;
+    greeting.textContent='Hi, '+username;
+    greeting.style.display='block';
+    const width=Math.ceil(greeting.getBoundingClientRect().width);
+    document.documentElement.style.setProperty('--bsb-greeting-width',width+'px');
+    menu.classList.add('bsb-menu-shifted');
+  }
+  client.auth.getSession().then(({data,error})=>{if(!error)updateGreeting(data.session?.user||null);});
+  client.auth.onAuthStateChange((_event,session)=>updateGreeting(session?.user||null));
+})();
+</script>
+
 </body></html>
